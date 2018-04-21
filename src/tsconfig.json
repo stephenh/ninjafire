@@ -8,7 +8,8 @@
         "strictNullChecks": true,
         "declaration": true,
         "rootDir": ".",
-        "outDir": "../dist"
+        "outDir": "../dist",
+        "typeRoots": [ "../node_modules/@typings" ]
     },
     "exclude": [
         "node_modules"

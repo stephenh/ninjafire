@@ -281,7 +281,7 @@ export class Store {
         try {
             await this.database.ref('/').update(updates);
         } catch (error) {
-            console.error(`Failed to save updates: ${JSON.stringify(updates)} ${error} ${error.stack}`);
+            log(`Failed to save updates: ${JSON.stringify(updates)} ${error} ${error.stack}`);
             throw error;
         }
     }
