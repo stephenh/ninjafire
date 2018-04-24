@@ -7,13 +7,15 @@
         "moduleResolution": "node",
         "strictNullChecks": true,
         "declaration": true,
-        "rootDir": "."
+        "rootDir": ".",
+        "outDir": "./dist",
+        "typeRoots": [ "./node_modules/@types" ]
     },
     "exclude": [
         "node_modules"
     ],
     "include": [
-        "**/*.ts",
-        "../src/**/*.ts"
+        "src/**/*.ts",
+        "test/**/*.ts"
     ]
 }

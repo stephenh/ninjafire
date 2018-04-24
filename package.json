@@ -43,7 +43,7 @@
   "scripts": {
     "env": "env",
     "test": "mocha -r ts-node/register test/**/*.ts",
-    "build": "tsc -p src",
+    "build": "tsc",
     "main": "dist/index.js",
     "types": "dist/types/index.d.ts",
     "prepublishOnly": "tsc -p src",
