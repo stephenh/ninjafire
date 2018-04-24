@@ -67,17 +67,18 @@
         "prefer-type-cast": false, // Prefer new as syntax over angle bracket
         "no-angle-bracket-type-assertion": true,
         "no-suspicious-comment": false, // TODO: Enable this ;-)
-        "max-func-body-length": false, 
+        "max-func-body-length": false,
         "no-unsafe-any": false, // Disabled this until I can figure out what it means
+        "no-any": false,
         "completed-docs": [
             false
-        ], // TODO! 
+        ], // TODO!
         "no-void-expression": [
             "ignore-arrow-function-shorthand"
         ],
         "no-relative-imports": false, // Disabled for tests
         "chai-vague-errors": false,
-        "typedef": [true, "call-signature", "arrow-call-signature", "parameter", "arrow-parameter", "property-declaration", "member-variable-declaration"],        
+        "typedef": [true, "call-signature", "arrow-call-signature", "parameter", "property-declaration", "member-variable-declaration"],
         "function-name": false,
         "cyclomatic-complexity": [
             50
