@@ -1,7 +1,8 @@
 
 import * as debug from 'debug';
-import * as admin from 'firebase-admin';
+import * as firebase from 'firebase';
 import { v1, v4 } from 'uuid';
+import { Reference } from './firebase';
 import { HandlerOptions, HandlerTypes, isAttrHandlerOptions, isBelongsToHandlerOptions, isHasManyHandlerOptions, Schema, throwBadHandler } from './handlers';
 import { Store } from './store';
 
@@ -15,7 +16,7 @@ export interface ModelPromise<T> extends Promise<T> {
     id: string;
     isLoading: boolean;
     _path?: string;
-    _ref?: admin.database.Reference;
+    _ref?: Reference;
 }
 
 export type ModelOrPromise<T extends Model> = T | ModelPromise<T>;
@@ -53,8 +54,6 @@ export abstract class Model {
     public abstract schema: Schema;
 
     public id: string;
-
-
     public isValid: boolean = false;
     public isLoading: boolean = false; // Always false on the model itself, true on the wrapped promise.
     public loadingPromise: ModelPromise<Model> | null = null;
@@ -102,7 +101,7 @@ export abstract class Model {
         return path;
     }
 
-    public _ref: admin.database.Reference | null = null;
+    public _ref: Reference | null = null;
 
     public _remoteAttributes: object = {}; // The state of the object in Firebase (as last seen)
     public _localAttributes: object = {}; // Any local attribute changes that have not yet been submitted
@@ -195,7 +194,7 @@ export abstract class Model {
                     if (isAttrHandlerOptions(options)
                         && options.setToServerTimestampOnSave === true
                     ) {
-                        this._localAttributes[key] = admin.database.ServerValue.TIMESTAMP;
+                        this._localAttributes[key] = firebase.database.ServerValue.TIMESTAMP;
                     }
                 }
             });
@@ -256,7 +255,7 @@ export abstract class Model {
 
             const allAttributes: object = {};
             Object.assign(allAttributes, this._remoteAttributes, this._localAttributes);
-            
+
             // Map through active keys in the schema
             Object.keys(allAttributes).filter((key: string) => this.schema[key] !== undefined).map((key: string) => {
 

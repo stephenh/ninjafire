@@ -1,7 +1,7 @@
 
 import * as debug from 'debug';
-import * as admin from 'firebase-admin';
 import { v4 } from 'uuid';
+import { DataSnapshot, FirebaseApi, Reference } from './firebase';
 import { Schema } from './handlers/types';
 import { Model, ModelOrPromise, ModelPromise } from './model';
 
@@ -34,7 +34,7 @@ export class Store {
 
 
     public basePath: string = '';
-    public database: admin.database.Database;
+    public database: FirebaseApi;
 
     /**
      * A pathPrefix links a 'group' key to a path in the DB. eg 'team' : '/team/123456'
@@ -57,7 +57,7 @@ export class Store {
      * @param options an object containing, optionally, basePath and useUUID
      */
 
-    constructor(database: admin.database.Database, options: { basePath?: string, useUUID?: number } | null = null) {
+    constructor(database: FirebaseApi, options: { basePath?: string, useUUID?: number } | null = null) {
         this.database = database;
         if (options !== null) {
             if (options.basePath !== undefined) {
@@ -201,11 +201,11 @@ export class Store {
 
         const path: string = record._path;
         log(`looking for record at path ${path}`);
-        const ref: admin.database.Reference = this.database.ref(path);
+        const ref = this.database.ref(path);
         record._ref = ref;
         // tslint:disable-next-line:typedef
         return new Promise((resolve, reject) => {
-            ref.on('value', (dataSnapshot: admin.database.DataSnapshot) => {
+            ref.on('value', (dataSnapshot: DataSnapshot) => {
 
                 log(`got data for ${record.id}`);
 
@@ -339,7 +339,6 @@ export class Store {
         await Promise.all(seenRecords.map(async (savedRecord: Model) => {
             await savedRecord._didSave();
         }));
-
     }
 
     /**
