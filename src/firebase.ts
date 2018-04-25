@@ -13,14 +13,16 @@ export interface DataSnapshot {
   val: any;
 }
 
-export interface ThenableReference extends Reference, Promise<any> {}
+// ninjafire does not currently need the ThenalbeReference return type
+// on Reference.push, but it compiles if needed in the future.
+// export interface ThenableReference extends Reference, PromiseLike<any> {}
 
 export interface Reference {
   key: string | null;
 
   update(updates: { [path: string]: any }): void;
 
-  push(value?: any, onComplete?: (a: Error|null) => any): ThenableReference;
+  push(value?: any, onComplete?: (a: Error|null) => any): Reference;
 
   off(): void;
 
