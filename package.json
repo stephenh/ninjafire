@@ -23,6 +23,7 @@
     "@types/chai": "^4.0.3",
     "@types/debug": "^0.0.30",
     "@types/mocha": "^2.2.41",
+    "@types/node": "^9.6.6",
     "babel-eslint": "^7.2.3",
     "chai": "^4.1.1",
     "dotenv": "^4.0.0",
