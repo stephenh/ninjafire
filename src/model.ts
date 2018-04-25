@@ -21,7 +21,10 @@ export interface ModelPromise<T> extends Promise<T> {
 
 export type ModelOrPromise<T extends Model> = T | ModelPromise<T>;
 
-export abstract class Model {
+export abstract class Model  {
+
+    // temporary? hack
+    [key: string]: any;
 
     public static modelName: string;
     public static modelPath: string;
@@ -103,8 +106,8 @@ export abstract class Model {
 
     public _ref: Reference | null = null;
 
-    public _remoteAttributes: object = {}; // The state of the object in Firebase (as last seen)
-    public _localAttributes: object = {}; // Any local attribute changes that have not yet been submitted
+    public _remoteAttributes: { [key: string]: any; } = {}; // The state of the object in Firebase (as last seen)
+    public _localAttributes: { [key: string]: any; } = {}; // Any local attribute changes that have not yet been submitted
     public _atomicallyLinked: Model[] = []; // Other records that will be saved when this record is saved
 
     public store: Store;
@@ -183,7 +186,7 @@ export abstract class Model {
                         && isAttrHandlerOptions(options)
                         && typeof options.defaultValue === 'function'
                     ) {
-                        this[key] = options.defaultValue();
+                        (this as any)[key] = options.defaultValue();
                     }
                 }
             });
@@ -199,7 +202,7 @@ export abstract class Model {
                 }
             });
 
-            const updates: {} = {};
+            const updates: { [key: string]: any } = {};
 
             Object.keys(this._localAttributes).map((key: string) => {
 
@@ -253,7 +256,7 @@ export abstract class Model {
 
             // Process embedded records. The 'localAttribute' may not change changed if the property change has only been made in the embedded record itself
 
-            const allAttributes: object = {};
+            const allAttributes: { [key: string]: any } = {};
             Object.assign(allAttributes, this._remoteAttributes, this._localAttributes);
 
             // Map through active keys in the schema
@@ -339,7 +342,7 @@ export abstract class Model {
      */
 
     public changedAttributes(): { [key: string]: [{}, {}] } {
-        const changedAttributes: {} = {};
+        const changedAttributes: { [key: string]: [{}, {}] } = {};
         Object.keys(this._localAttributes).map((key: string) => {
             changedAttributes[key] = [this._remoteAttributes[key], this._localAttributes[key]];
         });
@@ -385,14 +388,14 @@ export abstract class Model {
             if (this.schema[key].handlerType === HandlerTypes.belongsTo && isBelongsToHandlerOptions(options)) {
                 if (options.inverse !== undefined) {
                     // record being deleted, potentially has a related record
-                    await this[key];
-                    this[key] = null;
+                    await (this as any)[key];
+                    (this as any)[key] = null;
                 }
             } else if (this.schema[key].handlerType === HandlerTypes.hasMany && isHasManyHandlerOptions(options)) {
 
                 if (options.inverse !== undefined) {
 
-                    const relatedRecords: ModelOrPromise<Model>[] = this[key];
+                    const relatedRecords: ModelOrPromise<Model>[] = (this as any)[key];
 
                     const inverseKey = options.inverse;
                     await Promise.all(
@@ -402,7 +405,7 @@ export abstract class Model {
                             },
                         ),
                     );
-                    this[key] = [];
+                    (this as any)[key] = [];
                 }
             }
         }));
@@ -426,9 +429,9 @@ export abstract class Model {
      * @param object Any object describing the keys and values for the model
      */
 
-    public setAttributesFrom(object: {}): void {
+    public setAttributesFrom(object: {[key: string]: any}): void {
         this._remoteAttributes = {};
-        Object.keys(object).map((key: string) => {
+        Object.keys(object).map(key => {
             if (key in this.schema) {
                 log(`going to set ${key} -> ${object[key]}`);
                 this._remoteAttributes[key] = object[key];

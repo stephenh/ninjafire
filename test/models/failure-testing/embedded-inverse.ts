@@ -14,6 +14,6 @@ export class EmbeddedInverse extends Model {
 
     };
 
-    public related: ModelOrPromise<Bad>;
+    public related: ModelOrPromise<Bad> | null = null;
 }
 

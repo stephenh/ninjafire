@@ -22,16 +22,16 @@ export class Blog extends Model {
         posts: hasMany(Post, { inverse: 'blog' }),
     };
 
-    public name: string;
-    public description: string | null;
-    public createdDate: Date;
-    public updatedTime: number | null;
-    public published: boolean;
-    public featured: boolean;
-    public ranking: number;
-    public config: {} | null;
+    public name: string = '';
+    public description: string | null = null;
+    public createdDate: Date = new Date(0);
+    public updatedTime: number | null = null;
+    public published: boolean = false;
+    public featured: boolean = false;
+    public ranking: number = 0;
+    public config: {} | null = null;
 
-    public owner: ModelOrPromise<User> | null;
-    public posts: ModelOrPromise<Post>[];
+    public owner: ModelOrPromise<User> | null = null;
+    public posts: ModelOrPromise<Post>[] = [];
 }
 

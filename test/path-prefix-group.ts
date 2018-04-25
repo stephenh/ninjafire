@@ -135,9 +135,9 @@ describe('Path Prefix Groups', function (): void {
 
         const vote = await store.findRecord(Vote, testData.vote[1].id);
         const comment = await vote.comment;
-        const post = await comment.post;
+        const post = await (comment == null ? null : comment.post);
 
-        expect(post.title, 'retrieved correct post').to.equal(testData.post[1].title);
+        expect((post == null ? null : post.title), 'retrieved correct post').to.equal(testData.post[1].title);
 
         store.unloadAll();
     });

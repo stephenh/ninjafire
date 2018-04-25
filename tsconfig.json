@@ -5,7 +5,7 @@
         "target": "es2015",
         "lib": [ "es2016" ],
         "moduleResolution": "node",
-        "strictNullChecks": true,
+        "strict": true,
         "declaration": true,
         "rootDir": ".",
         "outDir": "./dist",

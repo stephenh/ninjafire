@@ -49,7 +49,7 @@ export function hasMany<T extends Model>(recordClass: { modelName?: string; new(
                     }
                     // Current related items are the remotely stored relationships with local changed overlaid
 
-                    const hasManyMap: {} = {};
+                    const hasManyMap: { [key: string]: any } = {};
                     Object.assign(hasManyMap, record._remoteAttributes[attribute], record._localAttributes[attribute]);
 
                     if (options.embedded === true) {

@@ -11,8 +11,9 @@ export async function resetFirebase(basePath: string | undefined): Promise<void>
                 if (basePath !== undefined) {
                     path += basePath;
                 }
-                if (testData[thing].path !== undefined) {
-                    path += `/${testData[thing].path}/${testData[thing][instance].id}`;
+                const entity: any = (testData as any)[thing];
+                if (entity.path !== undefined) {
+                    path += `/${entity.path}/${entity[instance].id}`;
                     await admin.database().ref(path).set(null);
                 }
             }));

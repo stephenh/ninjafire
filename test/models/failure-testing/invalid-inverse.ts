@@ -14,9 +14,9 @@ export class InvalidInverse extends Model {
         badHandlerOnInverse: belongsTo(Bad, { inverse: 'badHandler' }),
     };
 
-    public invalidKey: ModelOrPromise<Bad>;
-    public invalidType: ModelOrPromise<Bad>;
-    public badHandlerOnInverse: ModelOrPromise<Bad>;
+    public invalidKey: ModelOrPromise<Bad> | null = null;
+    public invalidType: ModelOrPromise<Bad> | null = null;
+    public badHandlerOnInverse: ModelOrPromise<Bad> | null = null;
 
 }
 

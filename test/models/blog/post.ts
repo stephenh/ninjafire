@@ -8,7 +8,6 @@ export class Post extends Model {
     public static modelPath: string = 'blog/posts';
 
     public schema: Schema = {
-
         title: attr(Serializers.String),
         blog: belongsTo(Blog, { inverse: 'posts' }),
         createdBy: belongsTo(User),
@@ -18,13 +17,13 @@ export class Post extends Model {
         comments: hasMany(Comment, { inverse: 'post' }),
     };
 
-    public title: string;
-    public blog: ModelOrPromise<Blog> | null; // nullable to help with testing
-    public createdBy: ModelOrPromise<User> | null;
-    public authors: ModelOrPromise<User>[];
-    public heroImage: Photo | null;
-    public photos: Photo[];
-    public comments: Comment[];
+    public title: string = '';
+    public blog: ModelOrPromise<Blog> | null = null; // nullable to help with testing
+    public createdBy: ModelOrPromise<User> | null = null;
+    public authors: ModelOrPromise<User>[] = [];
+    public heroImage: Photo | null = null;
+    public photos: Photo[] = [];
+    public comments: Comment[] = [];
 
 }
 

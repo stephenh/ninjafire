@@ -21,10 +21,10 @@ export class Bad extends Model {
         invalidEmbedHandlerOther: badHandler(Photo, { embedded: true } as any),
     };
 
-    public aNumber: number;
-    public embeddedInvese: ModelOrPromise<EmbeddedInverse>;
-    public invalidEmbedBelongsTo: ModelOrPromise<User>;
-    public invalidEmbedHasMany: ModelOrPromise<User>[];
-    public invalidInverse: ModelOrPromise<InvalidInverse>;
+    public aNumber: number = 0;
+    public embeddedInvese: ModelOrPromise<EmbeddedInverse> | null = null;
+    public invalidEmbedBelongsTo: ModelOrPromise<User> | null = null;
+    public invalidEmbedHasMany: ModelOrPromise<User>[] = [];
+    public invalidInverse: ModelOrPromise<InvalidInverse> | null = null;
 }
 

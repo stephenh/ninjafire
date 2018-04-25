@@ -15,10 +15,10 @@ export class Photo extends Model {
         taggedUsers: hasMany(User),
     };
 
-    public caption: string;
-    public url: string;
-    public takenBy: ModelOrPromise<User>;
-    public taggedUsers: ModelOrPromise<User>[];
+    public caption: string = '';
+    public url: string = '';
+    public takenBy: ModelOrPromise<User> | null = null;
+    public taggedUsers: ModelOrPromise<User>[] = [];
 
 }
 

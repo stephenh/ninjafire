@@ -16,10 +16,9 @@ export class Vote extends Model {
         user: belongsTo(User),
     };
 
-    public score: Number;
-
-    public comment: ModelOrPromise<Comment>;
-    public user: ModelOrPromise<User>;
+    public score: Number = 0;
+    public comment: ModelOrPromise<Comment> | null = null;
+    public user: ModelOrPromise<User> | null = null;
 
 }
 

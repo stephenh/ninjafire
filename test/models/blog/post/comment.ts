@@ -15,9 +15,9 @@ export class Comment extends Model {
         votes: hasMany(Vote, { inverse: 'comment' }),
     };
 
-    public post: ModelOrPromise<Post>;
-    public text: string;
-    public votes: ModelOrPromise<Vote>[];
+    public post: ModelOrPromise<Post> | null = null;
+    public text: string = '';
+    public votes: ModelOrPromise<Vote>[] = [];
 
 }
 

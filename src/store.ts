@@ -126,7 +126,7 @@ export class Store {
      * @param data The data to update the existing record with
      */
 
-    public pushRecordData(record: Model, data: {}): void {
+    public pushRecordData(record: Model, data: {[key: string]: any}): void {
         Object.keys(data).map((key: string) => {
             // Don't set 'id' attribute via the pushed data, it is an immutable property of the record
             if (key !== 'id') {
@@ -135,7 +135,7 @@ export class Store {
         });
     }
 
-    public findRecord<T extends Model>(recordClass: { modelName?: string; new(store: Store, id: string): T; }, id: string): ModelOrPromise<T> {
+    public findRecord<T extends Model>(recordClass: { modelName?: string; new(store: Store, id?: string): T; }, id: string): ModelOrPromise<T> {
 
         log(`going to find record with id: ${id}`);
 
@@ -205,12 +205,12 @@ export class Store {
         record._ref = ref;
         // tslint:disable-next-line:typedef
         return new Promise((resolve, reject) => {
-            ref.on('value', (dataSnapshot: DataSnapshot) => {
+            ref.on('value', (dataSnapshot: DataSnapshot | null) => {
 
                 log(`got data for ${record.id}`);
 
                 // tslint:disable-next-line:no-any
-                const result: any = dataSnapshot.val();
+                const result: any = dataSnapshot ? dataSnapshot.val() : null;
                 if (this._activeRecords[record.modelName] !== undefined && this._activeRecords[record.modelName][record.id] !== undefined) {
 
                     if (result !== null) {

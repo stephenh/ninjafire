@@ -14,7 +14,7 @@ export class User extends Model {
         posts: hasMany(Post, { inverse: 'authors' }),
     };
 
-    public name: string;
-    public blog: ModelOrPromise<Blog> | null;
-    public posts: ModelOrPromise<Post>[];
+    public name: string = "";
+    public blog: ModelOrPromise<Blog> | null = null;
+    public posts: ModelOrPromise<Post>[] = [];
 }

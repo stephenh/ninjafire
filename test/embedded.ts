@@ -207,7 +207,7 @@ describe('Embedded', function (): void {
     });
 
     it('should create a post with one embedded hasMany photo, retrieve it and append another and save it', async () => {
-        
+
         await resetFirebase(basePath);
         const store: Store = new Store(admin.database(), { basePath });
 
@@ -590,7 +590,7 @@ describe('Embedded', function (): void {
         if (post.heroImage !== null) {
 
             const takenBy = await post.heroImage.takenBy;
-            expect(takenBy.name, 'taken by is be user3').to.equal(testData.user[3].name);
+            expect(takenBy == null ? null : takenBy.name, 'taken by is be user3').to.equal(testData.user[3].name);
 
             const taggedUsers = post.heroImage.taggedUsers;
 
@@ -658,7 +658,7 @@ describe('Embedded', function (): void {
         expect(firstPhoto, 'Photo with id of photo1 is in post photos').to.not.be.an('undefined');
 
         const takenBy = await firstPhoto.takenBy;
-        expect(takenBy.name, 'taken by is user3').to.equal(testData.user[3].name);
+        expect(takenBy == null ? null : takenBy.name, 'taken by is user3').to.equal(testData.user[3].name);
 
         const taggedUsers = firstPhoto.taggedUsers;
 
